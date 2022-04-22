@@ -67,9 +67,4 @@ def draw_connectogram(mat_file=None, node_labels=None, threshold=None, out_dir=N
     plots.rescale(G)
     plots.aspect_equal()
 
-    if not out_dir:
-        out_dir = Path.cwd()
-
-    plt.savefig(Path(out_dir,'connectogram.svg'),  format='svg')
-
     return plt

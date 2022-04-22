@@ -82,6 +82,9 @@ def main():
         threshold = threshold
     )
 
+    out_dir = Path.cwd() if not opts.output else opts.output
+    connectogram.savefig(Path(out_dir,'connectogram.svg'),  format='svg')
+
 if __name__ == "__main__":
     raise RuntimeError(
         """\

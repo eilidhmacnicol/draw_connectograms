@@ -4,7 +4,6 @@ def draw_connectogram(mat_file=None, node_labels=None, threshold=None, out_dir=N
     import numpy as np
     from nxviz import (annotate, nodes, layouts, utils, edges, lines, plots)
     import pandas as pd
-    from pathlib import Path
         
     labels_df = pd.read_csv(node_labels)
 

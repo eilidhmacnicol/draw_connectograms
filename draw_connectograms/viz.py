@@ -1,4 +1,4 @@
-def draw_connectogram(mat_file=None, node_labels=None, threshold=None, out_dir=None):
+def draw_connectogram(mat_file=None, node_labels=None, threshold=None):
     import matplotlib.pyplot as plt
     import networkx as nx
     import numpy as np

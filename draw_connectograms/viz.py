@@ -22,7 +22,7 @@ def draw_connectogram(mat_file=None, node_labels=None, threshold=None):
             )
             thresh = int(thresh_pct*A_sort.size)
             A[abs(A) < A_sort[-thresh]] = 0
-        elif threshold[1] == 'absolute':
+        elif threshold[0] == 'absolute':
             A[abs(A) < threshold[1]] = 0
         else:
             return
@@ -35,7 +35,7 @@ def draw_connectogram(mat_file=None, node_labels=None, threshold=None):
     nx.set_node_attributes(G, dict(zip(labels_df.index, labels_df.grouping)), name="grouping")
     nx.set_node_attributes(G, dict(zip(labels_df.index, labels_df.group_name)), name="group name")
 
-    ax = plt.gca()
+    fig, ax = plt.subplots()
 
     # Customize node styling
     nt = utils.node_table(G)
@@ -66,4 +66,4 @@ def draw_connectogram(mat_file=None, node_labels=None, threshold=None):
     plots.rescale(G)
     plots.aspect_equal()
 
-    return plt
+    return fig

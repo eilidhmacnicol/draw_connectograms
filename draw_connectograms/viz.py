@@ -1,4 +1,4 @@
-def draw_connectogram(mat_file=None, node_labels=None, threshold=None, direction='both', label=None):
+def draw_connectogram(mat_file=None, node_labels=None, threshold=None, direction='both', label=None, max=None):
     import matplotlib.pyplot as plt
     import networkx as nx
     import numpy as np
@@ -75,14 +75,15 @@ def draw_connectogram(mat_file=None, node_labels=None, threshold=None, direction
     if not label:
         label="connectivity"
 
-    annotate.edge_colormapping(
-        G=G,
-        color_by="weight",
+    annotate.colormapping(
+        data=et["weight"],
         legend_kwargs={
             "shrink": 0.75,
             "pad": 0.25,
             "label": label
-        }
+        },
+        ax=ax,
+        colorbar_max=max,
     )
 
     plots.despine()

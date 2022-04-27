@@ -1,4 +1,4 @@
-def draw_connectogram(mat_file=None, node_labels=None, threshold=None):
+def draw_connectogram(mat_file=None, node_labels=None, threshold=None, direction='both'):
     import matplotlib.pyplot as plt
     import networkx as nx
     import numpy as np
@@ -13,17 +13,23 @@ def draw_connectogram(mat_file=None, node_labels=None, threshold=None):
         raise ValueError("Label and matrix dimensions do not match.")
 
     if threshold:
+        if direction == 'both':
+            direction_vals = "abs(A)"
+        elif direction == 'negative':
+            direction_vals = 'A * -1'
+        elif direction == 'positive':
+            direction_vals = 'A'
         if threshold[0] == 'proportional':
-            thresh_pct = threshold[1]/100
             A_sort = np.sort(
                 abs(
                     A[np.triu(A, k = 1) != 0]
                 )
             )
+            thresh_pct = threshold[1]/100
             thresh = int(thresh_pct*A_sort.size)
-            A[abs(A) < A_sort[-thresh]] = 0
+            exec(f"A[{direction_vals} < A_sort[-thresh]] = 0")
         elif threshold[0] == 'absolute':
-            A[abs(A) < threshold[1]] = 0
+            exec(f"A[{direction_vals} < threshold[1]] = 0")
         else:
             return
     G = nx.from_numpy_matrix(np.triu(A, k = 1))

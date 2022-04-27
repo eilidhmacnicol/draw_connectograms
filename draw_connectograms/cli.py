@@ -1,5 +1,6 @@
 """Command Line Interface."""
 from pathlib import Path
+from secrets import choice
 
 def get_parser():
     """Build parser object."""
@@ -25,6 +26,14 @@ visualisations of symmetric adjacency matrices.\
         type=Path,
         default=None,
         help="Path to alternative node labels",
+    )
+    parser.add_argument(
+        "--direction",
+        action="store",
+        type=str,
+        choices={"positive", "negative", "both"},
+        default="both",
+        help="Directionality of connections to draw",
     )
     threshold = parser.add_mutually_exclusive_group()
     threshold.add_argument(
@@ -79,7 +88,8 @@ def main():
     connectogram = draw_connectogram(
         mat_file = opts.input,
         node_labels = node_labels,
-        threshold = threshold
+        threshold = threshold,
+        direction=opts.direction.lower(),
     )
 
     mat_name = Path(

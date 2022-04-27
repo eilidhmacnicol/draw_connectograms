@@ -42,6 +42,14 @@ visualisations of symmetric adjacency matrices.\
         default=None,
         help="Label for colourbar",
     )
+    parser.add_argument(
+        "--cbar-max",
+        action="store",
+        type=float,
+        default=None,
+        help="Maximum absolute value for colourbar",
+    )
+
     threshold = parser.add_mutually_exclusive_group()
     threshold.add_argument(
         "--prop-threshold",
@@ -98,6 +106,7 @@ def main():
         threshold = threshold,
         direction=opts.direction.lower(),
         label=opts.cbar_label,
+        max=opts.cbar_max,
     )
 
     mat_name = Path(

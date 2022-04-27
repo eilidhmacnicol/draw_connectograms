@@ -59,7 +59,11 @@ def draw_connectogram(mat_file=None, node_labels=None, threshold=None, direction
 
     # Customize edge styling
     et = utils.edge_table(G)
-    edge_color = edges.edge_colors(et, nt=None, color_by=None, node_color_by=None)
+    if direction == 'both':
+        edge_colour_setting = "weight"
+    else:
+        edge_colour_setting = None
+    edge_color = edges.edge_colors(et, nt=None, color_by=edge_colour_setting, node_color_by=None)
     lw = edges.line_width(et, lw_by=None)
     alpha = edges.transparency(et, alpha_by="weight")
     patches = lines.circos(

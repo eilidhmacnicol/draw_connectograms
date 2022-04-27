@@ -57,8 +57,8 @@ def draw_connectogram(
     for patch in patches:
         ax.add_patch(patch)
     
-    if not label:
-        label="connectivity"
+    if not cbar_label:
+        cbar_label="connectivity"
 
     annotate.colormapping(
         data=et["weight"],

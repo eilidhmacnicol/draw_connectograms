@@ -105,8 +105,8 @@ def main():
         node_labels = node_labels,
         threshold = threshold,
         direction=opts.direction.lower(),
-        label=opts.cbar_label,
-        max=opts.cbar_max,
+        cbar_label=opts.cbar_label,
+        cbar_max=opts.cbar_max,
     )
 
     mat_name = Path(

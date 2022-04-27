@@ -1,4 +1,11 @@
-def draw_connectogram(mat_file=None, node_labels=None, threshold=None, direction='both', label=None, max=None):
+def draw_connectogram(
+    mat_file=None,
+    node_labels=None,
+    threshold=None,
+    direction='both',
+    cbar_label=None,
+    cbar_max=None
+):
     import matplotlib.pyplot as plt
     import networkx as nx
     import numpy as np
@@ -80,10 +87,10 @@ def draw_connectogram(mat_file=None, node_labels=None, threshold=None, direction
         legend_kwargs={
             "shrink": 0.75,
             "pad": 0.25,
-            "label": label
+            "label": cbar_label
         },
         ax=ax,
-        colorbar_max=max,
+        colorbar_max=cbar_max,
     )
 
     plots.despine()

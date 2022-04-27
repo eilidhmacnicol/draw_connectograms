@@ -1,4 +1,4 @@
-def draw_connectogram(mat_file=None, node_labels=None, threshold=None, direction='both'):
+def draw_connectogram(mat_file=None, node_labels=None, threshold=None, direction='both', label=None):
     import matplotlib.pyplot as plt
     import networkx as nx
     import numpy as np
@@ -71,6 +71,18 @@ def draw_connectogram(mat_file=None, node_labels=None, threshold=None, direction
     )
     for patch in patches:
         ax.add_patch(patch)
+    
+    if not label:
+        label="connectivity"
+    annotate.edge_colormapping(
+    G=G,
+    color_by="weight",
+    legend_kwargs={
+        "shrink": 0.75,
+        "pad": 0.25,
+        "label": label
+    }
+)
 
     plots.despine()
     plots.rescale(G)

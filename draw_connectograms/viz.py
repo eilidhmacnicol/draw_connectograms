@@ -66,4 +66,6 @@ def draw_connectogram(mat_file=None, node_labels=None, threshold=None):
     plots.rescale(G)
     plots.aspect_equal()
 
+    fig = plt.gcf()
+
     return fig

@@ -17,7 +17,13 @@ setup(
         'License :: OSI Approved :: GNU General Public License (GPL)',
         'Programming Language :: Python :: 3.9',
     ],
-    install_requires=['matplotlib', 'networkx', 'numpy', 'nxviz', 'pandas'],
+    install_requires=[
+        'matplotlib',
+        'networkx',
+        'numpy',
+        'nxviz @ git+https://github.com/eilidhmacnicol/nxviz.git@patch-color_func',
+        'pandas'
+    ],
     python_requires='>=3.9',
     entry_points={'console_scripts': ['draw_connectogram = draw_connectograms.cli:main']}
 )

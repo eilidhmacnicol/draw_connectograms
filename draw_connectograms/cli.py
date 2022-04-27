@@ -78,6 +78,7 @@ visualisations of symmetric adjacency matrices.\
 
 def main():
     """Entry point."""
+    from .utils import threshold_matrix
     from .viz import draw_connectogram
 
     opts = get_parser().parse_args()
@@ -100,10 +101,15 @@ def main():
     else:
         threshold = None
 
-    connectogram = draw_connectogram(
+    graph = threshold_matrix(
         mat_file = opts.input,
-        node_labels = node_labels,
         threshold = threshold,
+        direction=opts.direction.lower(),
+    )
+
+    connectogram = draw_connectogram(
+        graph=graph,
+        node_labels = node_labels,
         direction=opts.direction.lower(),
         cbar_label=opts.cbar_label,
         cbar_max=opts.cbar_max,

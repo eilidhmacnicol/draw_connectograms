@@ -1,45 +1,22 @@
 def draw_connectogram(
-    mat_file=None,
+    graph=None,
     node_labels=None,
-    threshold=None,
     direction='both',
     cbar_label=None,
     cbar_max=None
 ):
     import matplotlib.pyplot as plt
     import networkx as nx
-    import numpy as np
     from nxviz import (annotate, nodes, layouts, utils, edges, lines, plots)
     import pandas as pd
-        
+    
+    ### set up graph object ###
+    G = nx.from_numpy_matrix(graph)
+
     labels_df = pd.read_csv(node_labels)
 
-    A = np.loadtxt(mat_file, delimiter=',')  #adjacency matrix text file
-
-    if len(A) != labels_df.shape[0]:
+    if G.number_of_nodes() != labels_df.shape[0]:
         raise ValueError("Label and matrix dimensions do not match.")
-
-    if threshold:
-        if direction == 'both':
-            direction_vals = "abs(A)"
-        elif direction == 'negative':
-            direction_vals = 'A * -1'
-        elif direction == 'positive':
-            direction_vals = 'A'
-        if threshold[0] == 'proportional':
-            A_sort = np.sort(
-                abs(
-                    A[np.triu(A, k = 1) != 0]
-                )
-            )
-            thresh_pct = threshold[1]/100
-            thresh = int(thresh_pct*A_sort.size)
-            exec(f"A[{direction_vals} < A_sort[-thresh]] = 0")
-        elif threshold[0] == 'absolute':
-            exec(f"A[{direction_vals} < threshold[1]] = 0")
-        else:
-            return
-    G = nx.from_numpy_matrix(np.triu(A, k = 1))
 
     labels_df['label'] =  [f"{labels_df['hemi'][x]} {labels_df['group_name'][x]}" for x in labels_df.index]
 
@@ -48,6 +25,7 @@ def draw_connectogram(
     nx.set_node_attributes(G, dict(zip(labels_df.index, labels_df.grouping)), name="grouping")
     nx.set_node_attributes(G, dict(zip(labels_df.index, labels_df.group_name)), name="group name")
 
+    ### set up plot ###
     fig, ax = plt.subplots()
 
     # Customize node styling

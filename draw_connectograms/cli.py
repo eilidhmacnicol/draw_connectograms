@@ -35,6 +35,13 @@ visualisations of symmetric adjacency matrices.\
         default="both",
         help="Directionality of connections to draw",
     )
+    parser.add_argument(
+        "--colourbar-label",
+        action="store",
+        type=str,
+        default=None,
+        help="Label for colourbar",
+    )
     threshold = parser.add_mutually_exclusive_group()
     threshold.add_argument(
         "--prop-threshold",
@@ -90,6 +97,7 @@ def main():
         node_labels = node_labels,
         threshold = threshold,
         direction=opts.direction.lower(),
+        label=opts.colourbar_label
     )
 
     mat_name = Path(

@@ -36,7 +36,7 @@ visualisations of symmetric adjacency matrices.\
         help="Directionality of connections to draw",
     )
     parser.add_argument(
-        "--colourbar-label",
+        "--cbar-label",
         action="store",
         type=str,
         default=None,
@@ -97,7 +97,7 @@ def main():
         node_labels = node_labels,
         threshold = threshold,
         direction=opts.direction.lower(),
-        label=opts.colourbar_label
+        label=opts.cbar_label,
     )
 
     mat_name = Path(

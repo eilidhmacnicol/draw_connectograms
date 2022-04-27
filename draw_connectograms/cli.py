@@ -46,7 +46,7 @@ visualisations of symmetric adjacency matrices.\
         "--output",
         action="store",
         type=Path,
-        default=Path("results").absolute(),
+        default=Path(Path.cwd(), 'connectogram.svg').absolute(),
         help="Path where results should be stored",
     )
     return parser
@@ -82,8 +82,13 @@ def main():
         threshold = threshold
     )
 
-    out_dir = Path.cwd() if not opts.output else opts.output
-    connectogram.savefig(Path(out_dir,'connectogram.svg'),  format='svg')
+    mat_name = Path(
+        opts.input
+        ).name.removesuffix(
+            Path(opts.input).suffix
+            )
+    out = Path(Path.cwd(), f'{mat_name}_connectogram.svg') if not opts.output else opts.output
+    connectogram.savefig(out, format='svg')
 
 if __name__ == "__main__":
     raise RuntimeError(

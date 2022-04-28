@@ -44,11 +44,24 @@ def draw_connectogram(
 
     # Customize edge styling
     et = utils.edge_table(G)
-    if direction == 'both':
-        edge_colour_setting = "weight"
+    if cbar_max:
+        from functools import partial
+        from matplotlib.colors import Normalize
+        from nxviz.encodings import data_cmap
+
+        def divergent_color_func(val, cmap):
+            norm = Normalize(vmin=-cbar_max, vmax=cbar_max)
+            return cmap(norm(val))
+
+        cmap, _ = data_cmap(et['weight'])
+        cfunc = partial(divergent_color_func, cmap=cmap)
+        edge_color = et['weight'].apply(cfunc)
     else:
-        edge_colour_setting = None
-    edge_color = edges.edge_colors(et, nt=None, color_by=edge_colour_setting, node_color_by=None)
+        if direction == 'both':
+            edge_colour_setting = "weight"
+        else:
+            edge_colour_setting = None
+        edge_color = edges.edge_colors(et, nt=None, color_by=edge_colour_setting, node_color_by=None)
     lw = edges.line_width(et, lw_by=None)
     alpha = edges.transparency(et, alpha_by="weight")
     patches = lines.circos(
